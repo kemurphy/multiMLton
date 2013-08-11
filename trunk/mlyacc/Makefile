@@ -22,8 +22,8 @@ $(NAME): $(NAME).mlb $(shell PATH="$(BIN):$$PATH" && "$(MLTON)" -stop f $(NAME).
 	@echo 'Compiling $(NAME)'
 	"$(MLTON)" $(FLAGS) $(NAME).mlb
 
-$(NAME).sml: $(NAME).cm $(shell "$(MLTON)" -stop f $(NAME).cm)
-	mlton -stop sml $(NAME).cm
+$(NAME).sml: $(NAME).mlb $(shell "$(MLTON)" -stop f $(NAME).mlb)
+	mlton -stop sml $(NAME).mlb
 
 src/yacc.lex.sml: src/yacc.lex
 	rm -f src/yacc.lex.sml && \

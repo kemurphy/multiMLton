@@ -36,9 +36,11 @@ ifeq (mingw, $(HOST_OS))
   # Ditto for MinGW.
   FILE := mlton.cm
 else
-  # We're compiling MLton with an older version of itself, so use the stubs for
-  # the MLton structure.
-  FILE := mlton-stubs.cm
+  # We're compiling MLton with itself, so don't use any stubs.
+  FILE := mlton.mlb
+  FLAGS += -default-ann 'sequenceNonUnit warn'
+  FLAGS += -default-ann 'warnUnused true'
+  # FLAGS += -type-check true -show-types true
 endif
 endif
 endif
@@ -90,7 +92,7 @@ $(UP):
 	"$(SRC)/bin/upgrade-basis" '$(PATH)' "$(HOST_ARCH)" "$(HOST_OS)" >$(UP)
 
 mlton.sml: $(SOURCES)
-	rm -f mlton.sml && mlton -stop sml mlton.cm && chmod -w mlton.sml
+	rm -f mlton.sml && mlton -stop sml mlton.mlb && chmod -w mlton.sml
 
 .PHONY: def-use
 def-use:
